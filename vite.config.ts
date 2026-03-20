@@ -1,32 +1,24 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
 import path from 'path'
-import { fileURLToPath } from 'url'
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
 
-// Исправление для __dirname в ES-модулях
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+// Замените my-figma-project на точное имя вашего репозитория
+const repoName = 'Figma'
 
 export default defineConfig({
-  // ВАЖНО для GitHub Pages (Project Pages):
-  base: '/Figma/',
-
-  plugins: [react()],
-  
+  base: `/${repoName}/`,
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
-      // Простой алиас для @ -> src
       '@': path.resolve(__dirname, './src'),
-      // Остальные алиасы с версиями обычно не нужны и могут вызывать конфликты.
-      // Если они не критичны — рекомендую их убрать.
     },
   },
-  
-  build: {
-    target: 'esnext',
-    outDir: 'dist',
-  },
+  assetsInclude: ['**/*.svg', '**/*.csv'],
+})
   
   server: {
     port: 3000,
